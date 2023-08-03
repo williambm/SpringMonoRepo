@@ -2,6 +2,7 @@ package com.wbm.algamoneyapi.algamoneyapi.resource;
 
 import com.wbm.algamoneyapi.algamoneyapi.model.Lancamento;
 import com.wbm.algamoneyapi.algamoneyapi.repository.filter.LancamentoFilter;
+import com.wbm.algamoneyapi.algamoneyapi.repository.projection.ResumoLancamento;
 import com.wbm.algamoneyapi.algamoneyapi.service.LancamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/lancamentos")
@@ -26,6 +25,12 @@ public class LancamentoResource {
     @GetMapping
     public Page<Lancamento> pesquisar(LancamentoFilter filter, Pageable pageable) {
         return service.listarLancamentos(filter,pageable);
+    }
+
+    @GetMapping(params = "resumo")
+    //todo: Fluxo com BUG no criteria de Query !!! Posso depois mudar isso para um builder que faz a lógica
+    public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
+        return service.resumirLancamentos(filter,pageable);
     }
 
     @GetMapping("/{codigo}")

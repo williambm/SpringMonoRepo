@@ -6,6 +6,7 @@ import com.wbm.algamoneyapi.algamoneyapi.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -35,6 +36,7 @@ public class PessoaResource {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and hasAuthority('SCOPE_read')")
     public ResponseEntity<List<Pessoa>> listarPessoas() {
         List<Pessoa> pessoas = repository.findAll();
 

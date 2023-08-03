@@ -4,6 +4,7 @@ import com.wbm.algamoneyapi.algamoneyapi.model.Categoria;
 import com.wbm.algamoneyapi.algamoneyapi.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,6 +22,7 @@ public class CategoriaResource {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping
+    //@PreAuthorize("hasRole('ROLE_PESQUISAR_CATEGORIA') and hasScope('SCOPE_read')")
     public ResponseEntity<List<Categoria>> listar() {
         List<Categoria> categorias = categoriaRepository.findAll();
 
